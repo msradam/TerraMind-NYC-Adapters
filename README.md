@@ -9,6 +9,36 @@ LoRA adapters that specialize [`ibm-esa-geospatial/TerraMind-1.0-base`](https://
 on three NYC Earth-observation tasks. Trained on AMD Instinct MI300X via
 AMD Developer Cloud. Apache-2.0.
 
+## Demo segmentations (real Sentinel-2 + S1RTC + DEM stacks)
+
+### Buildings adapter
+
+Manhattan midtown — model finds essentially every building:
+
+![Manhattan midtown buildings](assets/terramind_buildings_manhattan_midtown.png)
+
+Jamaica Bay — model correctly finds 0.18% buildings:
+
+![Jamaica Bay buildings](assets/terramind_buildings_jamaica_bay.png)
+
+Central Park — mixed urban / vegetation:
+
+![Central Park buildings](assets/terramind_buildings_central_park.png)
+
+### LULC adapter (5-class: water / impervious / vegetation / bare / building)
+
+Manhattan midtown — dominated by impervious + buildings:
+
+![Manhattan midtown LULC](assets/terramind_lulc_manhattan_midtown.png)
+
+Jamaica Bay — 96% water:
+
+![Jamaica Bay LULC](assets/terramind_lulc_jamaica_bay.png)
+
+Central Park — vegetation visible:
+
+![Central Park LULC](assets/terramind_lulc_central_park.png)
+
 ## Adapters in this repo
 
 | adapter | task | classes | card mIoU | this-repo reproduction |

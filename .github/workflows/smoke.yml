@@ -1,0 +1,44 @@
+name: smoke
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  smoke:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-14]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+      - run: uv python install 3.12
+      - name: Install (skip heavy ML deps for smoke)
+        run: |
+          uv venv --python 3.12
+          uv pip install ruff pytest
+      - name: Ruff
+        run: uv run ruff check src
+      - name: Import smoke (vendored helpers, no torch needed)
+        run: |
+          # Try importing only the helpers that don't require torch.
+          # Full inference smoke happens in the meta repo's CI.
+          uv run python -c "
+          import sys
+          sys.path.insert(0, 'src')
+          # Vendored helpers don't need torch
+          from terramind_nyc_adapters._metrics import segmentation_score, regression_score
+          from terramind_nyc_adapters._provenance import record
+          from terramind_nyc_adapters._energy import measure_energy
+          import time
+          with measure_energy() as m:
+              time.sleep(0.05)
+          assert m.duration_s >= 0.04
+          print('smoke OK', m.method, m.joules)
+          "
