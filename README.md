@@ -163,6 +163,13 @@ One of three NYC fine-tuned foundation models in this family.
 - ESA WorldCover 2021 v200 under the ESA CCI Open Data Policy
   (CC-BY-4.0).
 
+## AI-assisted authoring
+
+Portions of this repository were drafted with the assistance of large
+language models. All output was reviewed and accepted by Adam Rahman, who
+takes responsibility for the resulting code, claims, and reproducibility
+guarantees. The full disclosure is in [`NOTICE`](NOTICE).
+
 ## License
 
 Apache-2.0. See [`LICENSE`](LICENSE).
